@@ -1,0 +1,23 @@
+name: Cypress Tests - CI/CD
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Kéo code từ repository về máy chủ ảo của GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Chạy Cypress chính thức bằng Official Action (tự động cài Node, dependencies và chạy headless)
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          # Nếu bạn có lệnh custom trong package.json (ví dụ: "cy:run": "cypress run"), 
+          # bạn có thể thay thế bằng: build: npm run build, start: npm start (nếu cần chạy local server trước)
+          browser: chrome
